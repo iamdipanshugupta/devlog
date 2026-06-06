@@ -3,25 +3,29 @@ import { redirect } from "next/navigation";
 import { db } from "@/lib/db";
 import Link from "next/link";
 import PostActions from "../components/post-actions";
-import type { Prisma } from "@prisma/client";
 export const dynamic = "force-dynamic";
 
 export default async function DashboardPage() {
 
-  type PostWithRelations = Prisma.PostGetPayload<{
-  include: {
-    tags: true;
-    likes: true;
+  type Post = {
+    id: string;
+    title: string;
+    body: string | null;
+    published: boolean;
+    createdAt: Date;
+    likes: { id: string }[];
+    tags: { id: string; name: string }[];
   };
-}>;
+
+
   const session = await auth();
   if (!session?.user?.id) redirect("/login");
 
-  const posts: PostWithRelations[] = await db.post.findMany({
-  where: { authorId: session.user.id },
-  include: { tags: true, likes: true },
-  orderBy: { createdAt: "desc" },
-});
+  const posts: Post[] = await db.post.findMany({
+    where: { authorId: session.user.id },
+    include: { tags: true, likes: true },
+    orderBy: { createdAt: "desc" },
+  });
 
   return (
     <div className="max-w-5xl mx-auto">
