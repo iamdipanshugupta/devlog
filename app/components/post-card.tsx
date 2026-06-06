@@ -19,8 +19,10 @@ type Post = {
 export default function PostCard({ post }: { post: Post }) {
   const { data: session } = useSession();
 
-  const isLiked = session?.user?.id
-    ? post.likes.some((l) => l.userId === session.user.id)
+  const userId = session?.user?.id;
+
+  const isLiked = userId
+    ? post.likes.some((l) => l.userId === userId)
     : false;
 
   async function handleLike() {

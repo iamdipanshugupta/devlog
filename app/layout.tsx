@@ -10,6 +10,7 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   const session = await auth();
+  const userName = session?.user?.name;
 
   return (
     <html lang="en">
@@ -28,19 +29,31 @@ export default async function RootLayout({
 
           <nav className="sticky top-0 z-20 border-b border-slate-700/60 bg-slate-950/85 px-6 py-4 backdrop-blur-xl shadow-sm">
             <div className="max-w-6xl mx-auto flex flex-wrap items-center gap-4">
-              <Link href="/" className="font-bold text-xl text-white hover:text-sky-400 transition-colors">
+              <Link
+                href="/"
+                className="font-bold text-xl text-white hover:text-sky-400 transition-colors"
+              >
                 DevLog
               </Link>
-              <Link href="/explore" className="text-slate-300 hover:text-white transition-colors">
+              <Link
+                href="/explore"
+                className="text-slate-300 hover:text-white transition-colors"
+              >
                 Explore
               </Link>
 
               {session ? (
                 <>
-                  <Link href="/dashboard" className="text-slate-300 hover:text-white transition-colors">
+                  <Link
+                    href="/dashboard"
+                    className="text-slate-300 hover:text-white transition-colors"
+                  >
                     Dashboard
                   </Link>
-                  <Link href="/posts/new" className="text-slate-300 hover:text-white transition-colors">
+                  <Link
+                    href="/posts/new"
+                    className="text-slate-300 hover:text-white transition-colors"
+                  >
                     New Post
                   </Link>
                   <form
@@ -50,17 +63,26 @@ export default async function RootLayout({
                     }}
                     className="ml-auto"
                   >
-                    <button type="submit" className="text-sm text-slate-400 hover:text-white transition-colors">
-                      Logout ({session.user.name})
+                    <button
+                      type="submit"
+                      className="text-sm text-slate-400 hover:text-white transition-colors"
+                    >
+                      Logout ({userName})
                     </button>
                   </form>
                 </>
               ) : (
                 <div className="ml-auto flex gap-3">
-                  <Link href="/login" className="rounded-full border border-slate-600 px-4 py-1.5 text-sm text-slate-300 hover:text-white transition-colors">
+                  <Link
+                    href="/login"
+                    className="rounded-full border border-slate-600 px-4 py-1.5 text-sm text-slate-300 hover:text-white transition-colors"
+                  >
                     Login
                   </Link>
-                  <Link href="/register" className="rounded-full bg-sky-500 px-4 py-1.5 text-sm font-medium text-white hover:bg-sky-400 transition-colors">
+                  <Link
+                    href="/register"
+                    className="rounded-full bg-sky-500 px-4 py-1.5 text-sm font-medium text-white hover:bg-sky-400 transition-colors"
+                  >
                     Register
                   </Link>
                 </div>
@@ -73,7 +95,6 @@ export default async function RootLayout({
           <footer className="border-t border-slate-700/60 mt-16 py-8 text-center text-slate-500 text-sm">
             <p>© 2026 DevLog — Built with Next.js, Prisma & Neon</p>
           </footer>
-
         </NextAuthProvider>
       </body>
     </html>
