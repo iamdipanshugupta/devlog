@@ -2,6 +2,10 @@
 
 A full-stack developer blogging platform built with Next.js 15, Prisma, and Neon PostgreSQL. Developers can write, publish, and like posts.
 
+
+## Live Demo
+
+https://devlog-t984.vercel.app
 ---
 
 ## Tech Stack
